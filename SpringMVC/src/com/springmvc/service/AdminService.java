@@ -37,13 +37,13 @@ public class AdminService {
 	}
 
 	public boolean update(Admin admin) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return adminDAO.update(admin);
 	}
 
 	public boolean delete(int idAd) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return adminDAO.delete(idAd);
 	}
 
 	public int[] saveAll(List<Admin> admins) {

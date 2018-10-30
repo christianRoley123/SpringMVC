@@ -30,6 +30,9 @@ public class AdminController  {
 							@RequestParam("param_estado") String estado) {
 		
 		admin.setFechaCreacion(new Timestamp(new Date().getTime()));
+		if(admin.getCodigo() >= 1) {
+			admin_Service.update(admin);			
+		}else {
 		if(admin_Service.save(admin)) {
 			redirectAttributes.addFlashAttribute("resultado", "Registro realizado con exito");
 			
@@ -37,14 +40,17 @@ public class AdminController  {
 			redirectAttributes.addFlashAttribute("resultado", "Error, verificar inputs");
 			
 		}
+		}
+		
 		return  "redirect:/admin";
 		
 	}
 	
-	@RequestMapping("/admin/{id}/update")
+	@RequestMapping("/admin/{codigo}/update")
 	public String showUpdate(Model modelo, @PathVariable("codigo") int codigo) {
 		Admin adminObj = admin_Service.findById(codigo);
-		modelo.addAttribute("adminUpdate", adminObj);
+		
+		modelo.addAttribute("clave_admin", adminObj);
 		return "admin";
 	}
 	
@@ -61,7 +67,7 @@ public class AdminController  {
 		
 		//listar administradores
 		List<Admin> listObj =  admin_Service.findAll();
-		//Vector<Admin> vector = (Vector<Admin>) listObj;
+		
 		model.addAttribute("administradores",listObj);
 		return "admin";
 	}
@@ -84,6 +90,21 @@ public class AdminController  {
 		//ya no devolvera una direccion o vista logica, sino una redireccion
 		return "redirect:/admin";
 		}
+	
+	@RequestMapping(value = "/admin/{codigo}/delete")
+	public String delete(@PathVariable("codigo") int codigo , RedirectAttributes ra) {
+		String path = "redirect:/admin";
+	if(	admin_Service.delete(codigo) ) {
+		ra.addFlashAttribute("resultado", "Cambios realizados correctamente.");
+		
+		
+	}else {
+		ra.addFlashAttribute("resultado", "cambios no realizados, hay error");
+	}
+		
+		return path;
+		
+	}
 	
 
 }

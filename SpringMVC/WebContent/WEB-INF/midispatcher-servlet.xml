@@ -16,4 +16,8 @@
 	<context:component-scan base-package="com.springmvc.controller"></context:component-scan><!-- 
 		ESCANEARA PARA PODER BUSCAR CLASES CON ANOTACIONES @CONTROLLER -->
 	<mvc:annotation-driven></mvc:annotation-driven>
+		
+<!-- 		ESCANEA LOS RECURSOS, EJEMPLO: JQUERY,BOSTRAP, JAVASCRIPT DONDE SE TENGA ALMACENADO.
+			Al MAPPING le damos 2(**) PARA QUE CONTEMPLEN LAS SUBCARPETAS QUE SE PUEDAN TENER-->
+	<mvc:resources location="/resources/" mapping="/res/**"/>
 </beans>
